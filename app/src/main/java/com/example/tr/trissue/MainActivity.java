@@ -1,23 +1,21 @@
 package com.example.tr.trissue;
 
-import android.support.design.widget.TabLayout;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -151,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
         private final FragmentManager mFragmentManager;
         public Fragment mFragmentAtPos0;
         SecondPageListener listener = new SecondPageListener();
@@ -185,6 +183,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
+        }
+
+        @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
@@ -202,9 +205,8 @@ public class MainActivity extends AppCompatActivity {
                 mFragmentManager.beginTransaction().remove(mFragmentAtPos0)
                         .commit();
                 if (mFragmentAtPos0 instanceof PlaceholderFragment){
-                    mFragmentAtPos0 = new Surveys();
+                    mFragmentAtPos0 = Surveys.newInstance("124");
                 }
-
                 notifyDataSetChanged();
             }
         }
